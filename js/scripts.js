@@ -39,13 +39,3 @@ function getPokemonList(pokemon) {
 }
 
 pokemonRepository.getAll().forEach(getPokemonList);
-
-//------------ARCHIVE---------------------
-// pokemonRepository.add({name : 'test', height : 0.6, type : ['fire'], ability : ['blaze','solar-power']})
-// calling the pokemon names and heights
-  // for ( let i = 0; i < pokemonList.length; i++)
-  //   {
-  //     // mark a pokemon based on a condition
-  //     if (pokemonList[i].height >= 1) {document.write('<p>'+pokemonList[i].name +' '+'(height: '+pokemonList[i].height+') '+'Wow, that\'s a big pokemon!'+'</p>');}
-  //     else {document.write('<p>'+pokemonList[i].name + ' '+'(height: '+pokemonList[i].height+')'+'</p>');}
-  //   }
