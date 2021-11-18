@@ -1,6 +1,6 @@
 
 // create pokemon list
-let pokemonRepository = ( // pokemon Repository variable to hold IIFE what returns
+let pokemonRepository = ( // Repository variable to hold what IIFE returns
   function() { //IIFE function to store pokemon list
     let pokemonList = [
       {name : 'Bulbasaur', height : 0.7, type : ['grass','poison'], ability : ['chlorophyll','overgrow']},
@@ -19,23 +19,43 @@ let pokemonRepository = ( // pokemon Repository variable to hold IIFE what retur
       else
         (pokemonList.push(pokemon)); //statement to add new pokemon item
     }
+
+    // function to take each properties from forEach to create button for each pokemon
+    function addListItem(pokemon) {
+      let pokemon_list = document.querySelector('.pokemon-list');
+      let pokemon_listItem = document.createElement('li');
+      //create button and button class for each pokemon
+      let button = document.createElement('button');
+          button.innerText = pokemon.name;
+          button.classList.add('pokemonbutton');
+      //appendChild button inside pokemon listItem, and listItem inside list
+      pokemon_listItem.appendChild(button);
+      pokemon_list.appendChild(pokemon_listItem);
+      //even click listerner to trigger function showDetails
+      button.addEventListener('click', function(){
+        showDetails(pokemon)
+        }
+      );
+    }
+
+    //function to take the click event listener trigger to log pokemon
+    function showDetails(pokemon) {
+      console.log(pokemon);
+    }
+
+    // return getAll function, add function and addListitem functions
     return {
       getAll: getAll,
-      add: add
+      add: add,
+      addListItem: addListItem
     }
   }
 )();
 
-// function calling each polemon in array using forEach
-function getPokemonList(pokemon) {
-  document.write (
-    '<p>'
-    + 'Name: ' + pokemon.name + '</br>'
-    + 'Height: ' + pokemon.height + '</br>'
-    + 'Type: ' + pokemon.type + '</br>'
-    + 'Ability: ' + pokemon.ability + '</br>'
-    + '</p>'
-  );
-}
+//adding 1 pokemon into the list
+pokemonRepository.add({name : 'Pikachu', height : 1, type : ['Electric'], ability : ['static']})
 
-pokemonRepository.getAll().forEach(getPokemonList);
+//forEach loop to call each pokemon from getAll function to pass to addListItem function
+pokemonRepository.getAll().forEach( function(pokemon) {
+  pokemonRepository.addListItem(pokemon);}
+);
