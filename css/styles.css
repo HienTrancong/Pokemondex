@@ -1,1 +1,15 @@
-﻿
+﻿.pokemonbutton {
+  color: black;
+  background-color: white;
+  text-align: center;
+  padding: auto; margin: 3px;
+  display: block;
+  width: 200px; height: 50px;
+  border: 3px solid red;
+  font-weight: bold;
+}
+
+.pokemon-list {
+  list-style: none;
+  padding: 0;
+}
