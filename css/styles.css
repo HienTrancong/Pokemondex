@@ -1,15 +1,54 @@
-﻿.pokemonbutton {
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #9BB7D4;
+  font-family: monospace;
+  font-weight: 300;
+  font-size: 20px;
+  line-height: 1.6;
+  text-align: center;
+  margin: 20px;
+}
+
+button {
   color: black;
   background-color: white;
   text-align: center;
-  padding: auto; margin: 3px;
+  margin: 3px;
   display: block;
-  width: 200px; height: 50px;
-  border: 3px solid red;
+  width: 300px; height: 50px;
+  border: 3px solid black;
+  border-radius: 5px;
   font-weight: bold;
+  text-decoration: none;
+  box-shadow: 2px 2px 5px 1px rgba(0,0,0,0.2);
+}
+
+.pokemonbutton:hover, .pokemonbutton:focus {
+  cursor: pointer;
+  opacity: 0.8
 }
 
 .pokemon-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-gap: 10px;
   list-style: none;
+  text-align: center;
   padding: 0;
+}
+
+@media all and (max-width: 500px) {
+  .pokemon-list {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media all and (min-width: 500px) and (max-width:750px) {
+  .pokemon-list {
+    grid-template-columns: 1fr 1fr;
+  }
 }
