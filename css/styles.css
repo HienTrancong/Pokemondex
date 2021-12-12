@@ -13,20 +13,31 @@ body {
   margin: 20px;
 }
 
-button {
+.listButton {
   color: black;
-  background-color: #9BB7D4;
+  /* background-color: #9BB7D4; */
   text-align: center;
-  margin: 3px;
+  /* margin: 3px; */
   display: block;
-  width: 300px; height: 50px;
-  border: 3px solid black;
+  /* width: 100px; */
+  /* height: 50px; */
+  /* border: 3px solid black; */
   border-radius: 5px;
-  font-weight: bold;
+  padding-top: 10px;
+  /* font-weight: bold; */
   text-decoration: none;
   box-shadow: 2px 2px 5px 1px rgba(0,0,0,0.2);
+  text-transform:  capitalize;
 }
 
+.form-inline {
+  float: right;
+}
+
+.close {
+  text-transform: none;
+  margin: auto;
+}
 
 button:hover, button:focus {
   cursor: pointer;
@@ -34,11 +45,10 @@ button:hover, button:focus {
 }
 
 .pokemon-list {
-  margin-top: 100px;
-  margin-left: 100px;
+  margin: 100px 100px 100px 100px;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  grid-gap: 10px;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-gap: 50px;
   list-style: none;
   text-align: center;
   padding: 0;

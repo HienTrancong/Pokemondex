@@ -1,44 +1,58 @@
 
 // create pokemon list
 let pokemonRepository = ( // Repository variable to hold what IIFE returns
-  function() { //IIFE function to store pokemon list
-    let pokemonList = []; //declare pokemonList as empty array
-    let apiUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=100'; //declare variable for pokemonAPI url
-    let modal = document.querySelector('#pokedex'); //select bootstrap modal from HTML elements
+  //IIFE function to store pokemon list
+  function() {
+    //declare pokemonList as empty array
+    let pokemonList = [];
+    //declare variable for pokemonAPI url
+    let apiUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=100';
+    //select bootstrap modal from HTML elements
+    let modal = document.querySelector('#pokemonModal');
 
-    //function to fetch data from pokemon API, as a promise
+  //START function to load data from API to pokemonList array ----------------------
     function loadList() {
-      return fetch(apiUrl) //function to fetch json file from api URL, return promise
-        .then(function (response){ //if fetch is resolved, return response json file
-          return response.json(); //function to parse json file to object
-        })
-        .then(function (json){ //if fetch is resolved, json object
-          json.results.forEach(function(item){ //in .results property, loop each item
-            let pokemon = { //declare pokemon object with name and url key value pairs
-              name: item.name,
-              detailsUrl: item.url
-            };
-            add(pokemon); //add each pokemon object to pokemonList array
-          })
-        })
-        .catch(function(err){ //if fetch is rejected, function to alert error
-          alert.error(err);
-        })
-      }
+      //fetch json file from api URL, return promise
+      return fetch(apiUrl)
+      //if fetch is resolved, return response json file
+      .then(function (response){
+        return response.json();//parse json file to object
+      })
+      //if fetch is resolved, from json object
+      .then(function (json){
+        json.results.forEach(function(item){ //in .results property, loop each item
+          let pokemon = { //declare pokemon object with name and url key value pairs
+            name: item.name,
+            detailsUrl: item.url
+          };
+          //add each pokemon object to pokemonList array
+          add(pokemon);
+        });
+      })
+      //if fetch is rejected, function to alert error
+      .catch(function(err){
+        alert.error(err);
+      })
+    }
+  //END function to load data from API to pokemonList array ----------------------
 
-    //function to load detail of each pokemon, taking detailsUrl from function loadList
+  //START function to load detail of each pokemon, taking detailsUrl from function loadList
     function loadDetails(pokemon) {
       let url = pokemon.detailsUrl; //declare url taking detailsUrl from func loadList
-      return fetch(url) //function to fetch json file from detailsUrl
-      .then(function(response){ //function to parse json file to object
-        return response.json()
+      // fetch json file from detailsUrl, return promise
+      return fetch(url)
+      // if fetch is resolved, return response json file
+      .then(function(response){
+        return response.json() //parse json file to object
       })
-      .then(function(details){ //from object (parsed from json)
+      // if fetch is resolved, from object (parsed from json) add information to pokemon detail
+      .then(function(details){
         //declare pokemon details including height, weight, types and image
         pokemon.height = details.height;
         pokemon.weight = details.weight;
         pokemon.types = details.types;
-        pokemon.imageUrl = details.sprites.front_default
+        pokemon.imageUrlFront = details.sprites.front_default;
+        pokemon.imageUrlBack = details.sprites.back_default
       })
       .catch(function(err){ //if fetch is rejected, function to alert error
         console.error(err);
@@ -61,22 +75,33 @@ let pokemonRepository = ( // Repository variable to hold what IIFE returns
         (pokemonList.push(pokemon)); //statement to add new pokemon item
     }
 
-
-
-
     // function to take each properties from forEach to create button for each pokemon
     function addListItem(pokemon) {
        let pokemon_list = document.querySelector('.pokemon-list');
        let pokemon_listItem = document.createElement('li');
+           pokemon_listItem.classList.add('group-list-item');
        //create button and button class for each pokemon
-       let button = document.createElement('button');
-           button.innerText = pokemon.name;
-           button.classList.add('pokemonbutton');
+       let listButton = document.createElement('button');
+           listButton.innerText = pokemon.name;
+           listButton.classList.add('listButton', 'btn-outline-info', 'btn-block');
+           listButton.setAttribute('data-target','#pokemonModal');
+           listButton.setAttribute('data-toggle','modal');
        //appendChild button inside pokemon listItem, and listItem inside list
-       pokemon_listItem.appendChild(button);
+       pokemon_listItem.appendChild(listButton);
        pokemon_list.appendChild(pokemon_listItem);
+
+       //Add pokemon image to listButton
+       loadDetails(pokemon).then(function() {
+        let imgDiv = document.createElement('div');
+        listButton.appendChild(imgDiv);
+
+        let pokemonButtonImg = document.createElement('img');
+        pokemonButtonImg.setAttribute('src',pokemon.imageUrlFront);
+        imgDiv.appendChild(pokemonButtonImg);
+        })
+
        //even click listerner to trigger function showDetails
-       button.addEventListener('click', function(){
+       listButton.addEventListener('click', function(){
          showDetails(pokemon)
          }
        );
@@ -104,8 +129,12 @@ let pokemonRepository = ( // Repository variable to hold what IIFE returns
       let nameElement = $('<h1>' + pokemon.name + '</h1>');
 
       // create element for image in modal content
-      let imageElement = $('<img class="modal-image" src="">');
-      imageElement.attr('src', pokemon.imageUrl); //add pokemon image source attribute
+      let imageFrontElement = $('<img class="modal-image-front" src="">');
+      imageFrontElement.attr('src', pokemon.imageUrlFront); //add pokemon image source attribute
+
+      // create element for image in modal content
+      let imageBackElement = $('<img class="modal-image-back" src="">');
+      imageBackElement.attr('src', pokemon.imageUrlBack); //add pokemon image source attribute
 
       // create element for height in modal content
       let heightElement = $('<p>' + 'Height: ' + pokemon.height + '</p>');
@@ -117,12 +146,13 @@ let pokemonRepository = ( // Repository variable to hold what IIFE returns
       let typeElement = $('<p>' + 'Type: ' + pokemon.types + '</p>');
 
       modalTitle.append(nameElement);
-      modalBody.append(imageElement);
+      modalBody.append(imageFrontElement);
+      modalBody.append(imageBackElement);
       modalBody.append(heightElement);
       modalBody.append(weightElement);
       modalBody.append(typeElement);
 
-      $('#pokedex').modal();
+      $('#pokemonModal').modal();
     }
 
     // return getAll function, add function and addListitem functions
