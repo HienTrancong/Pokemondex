@@ -21,7 +21,7 @@ let pokemonRepository = ( // Repository variable to hold what IIFE returns
             add(pokemon); //add each pokemon object to pokemonList array
           })
         })
-        .catch(function(err){ //if fetch is rejected, function to alert errot
+        .catch(function(err){ //if fetch is rejected, function to alert error
           alert.error(err);
         })
       }
@@ -40,7 +40,7 @@ let pokemonRepository = ( // Repository variable to hold what IIFE returns
         pokemon.types = details.types;
         pokemon.imageUrl = details.sprites.front_default
       })
-      .catch(function(err){
+      .catch(function(err){ //if fetch is rejected, function to alert error
         console.error(err);
       })
     }
