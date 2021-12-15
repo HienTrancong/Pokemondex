@@ -48,15 +48,24 @@ let pokemonRepository = ( // Repository variable to hold what IIFE returns
       // if fetch is resolved, from object (parsed from json) add information to pokemon detail
       .then(function(details){
         //declare pokemon details including height, weight, types and image
+          let poketypes = [];
+          for (let i = 0; i < details.types.length; i++ ) {
+            if ( i < details.types.length - 2) {
+              poketypes.push(details.types[i].type.name);
+            } else {
+              poketypes.push(' '+ details.types[i].type.name)
+            }
+          }
+        pokemon.types = poketypes;
         pokemon.height = details.height;
         pokemon.weight = details.weight;
-        pokemon.types = details.types;
         pokemon.imageUrlFront = details.sprites.front_default;
-        pokemon.imageUrlBack = details.sprites.back_default
+        pokemon.imageUrlBack = details.sprites.back_default;
       })
       .catch(function(err){ //if fetch is rejected, function to alert error
         console.error(err);
       })
+
     }
 
     //function to return all item in pokemon list
@@ -126,7 +135,7 @@ let pokemonRepository = ( // Repository variable to hold what IIFE returns
       modalBody.empty();
 
       //create element for name in modal content
-      let nameElement = $('<h1>' + pokemon.name + '</h1>');
+      let nameElement = $('<h2>' + pokemon.name + '</h2>');
 
       // create element for image in modal content
       let imageFrontElement = $('<img class="modal-image-front" src="">');
@@ -171,6 +180,26 @@ let pokemonRepository = ( // Repository variable to hold what IIFE returns
 
 //forEach loop to call each pokemon from getAll function to pass to addListItem function
 pokemonRepository.loadList().then(function(){
+  // Search pokemon
+  document
+    .querySelector('.search-pokemon')
+    .addEventListener('submit', function(event) {
+      event.preventDefault();
+      let query = document.querySelector('#search-input').value;
+      document.querySelector('.pokemon-list').innerHTML = '';
+      if (query === '') {
+        pokemonRepository.getAll().forEach(function(pokemon) {
+          pokemonRepository.addListItem(pokemon);
+        })
+      } else {
+        pokemonRepository.getAll().forEach(function(pokemon) {
+          if (pokemon.name.indexOf(query) > -1) {
+              pokemonRepository.addListItem(pokemon);
+          }
+        })
+      };
+    });
+
   pokemonRepository.getAll().forEach(function(pokemon) {
     pokemonRepository.addListItem(pokemon);
   });
