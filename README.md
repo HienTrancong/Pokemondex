@@ -10,7 +10,7 @@ Page provides a index of pokemons and detail information of each pokemon such as
 
 1. Loads data of pokemon (image, height, weight, type) from external API
 2. Reponsive grid of pokemons' list
-3. Click to view Pokemon detail
+3. Click to view Pokemon detail in a modal
 4. Search bar to search for pokemons
 
 ## Technologies
