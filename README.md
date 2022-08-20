@@ -9,7 +9,7 @@ Page provides a index of pokemons and detail information of each pokemon such as
 ## Key features
 
 1. Loads data of pokemon (image, height, weight, type) from external API
-2. Reponsive list view of pokemons
+2. Reponsive grid of pokemons' list
 3. Click to view Pokemon detail
 4. Search bar to search for pokemons
 
