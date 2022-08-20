@@ -1,5 +1,23 @@
-# Pokedex
+# POKEDEX
 
-Project description: The purpose of this web app is to provide an index of pokemon and detail information of each pokemon such as name, height, weight, type.
+[Github.io page](https://hientrancong.github.io/Pokemondex/)
 
-It is built by HTML, CSS and JS which use external API of pokemons. 
+## Purpose
+
+Page provides a index of pokemons and detail information of each pokemon such as name, height, weight, type.
+
+## Key features
+
+1. Loads data of pokemon (image, height, weight, type) from external API
+2. Reponsive list view of pokemons
+3. Click to view Pokemon detail
+4. Search bar to search for pokemons
+
+## Technologies
+
+- HTML5
+- CSS3
+- JavaScript
+- Data from external API (https://pokeapi.co/)
+- JS codes are formatted by ESLint rules, Prettier.
+- App work in Chrome, Firefox, Safari, Edge, and Internet Explorer 11.
